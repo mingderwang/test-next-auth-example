@@ -12,6 +12,46 @@ import Auth0Provider from "next-auth/providers/auth0"
 export default NextAuth({
   // https://next-auth.js.org/configuration/providers
   providers: [
+    {
+  id: "google",
+  name: "Google",
+  type: "oauth",
+  wellKnown: "https://accounts.google.com/.well-known/openid-configuration",
+  authorization: { params: { scope: "openid email profile" } },
+  idToken: true,
+  checks: ["pkce", "state"],
+  profile(profile) {
+    return {
+      id: profile.sub,
+      name: profile.name,
+      email: profile.email,
+      image: profile.picture,
+    }
+  },
+  clientId: process.env.GOOGLE_ID,
+  clientSecret: process.env.GOOGLE_SECRET,
+},
+    {
+            id: "pinterest",
+            name: "Pinterest",
+            type: "oauth",
+            version: "2.0",
+            scope: "boards:read,boards:read_secret,boards:write,boards:write_secret,pins:read,pins:read_secret,pins:write,pins:write_secret,user_accounts:read",
+            accessTokenUrl: "https://api.pinterest.com/v3/oauth/token",
+            authorizationUrl: "https://www.pinterest.com/oauth&response_type=code",
+            requestTokenUrl: "",
+            profileUrl: "",
+            clientId: process.env.PINTEREST_CLIENT_ID,
+            clientSecret: process.env.PINTEREST_CLIENT_SECRET,
+            profile: async (profile, accessToken) => {},
+            checks: "state",
+            headers: {},
+            authorizationParams: {
+                client_id: process.env.PINTEREST_CLIENT_ID,
+                // scope: scope,
+                redirect_uri: encodeURIComponent(process.env.PINTEREST_REDIRECT_URI),
+            }
+        },
     /* EmailProvider({
          server: process.env.EMAIL_SERVER,
          from: process.env.EMAIL_FROM,
@@ -39,10 +79,10 @@ export default NextAuth({
       // https://docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps
       scope: "read:user",
     }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
-    }),
+//    GoogleProvider({
+//      clientId: process.env.GOOGLE_ID,
+//      clientSecret: process.env.GOOGLE_SECRET,
+//    }),
     TwitterProvider({
       clientId: process.env.TWITTER_ID,
       clientSecret: process.env.TWITTER_SECRET,
@@ -53,7 +93,7 @@ export default NextAuth({
       issuer: process.env.AUTH0_ISSUER,
     }),
   ],
-  // The secret should be set to a reasonably long random string.
+  // The secret should be set to   a reasonably long random string.
   // It is used to sign cookies and to sign and encrypt JSON Web Tokens, unless
   // a separate secret is defined explicitly for encrypting the JWT.
   secret: process.env.SECRET,
