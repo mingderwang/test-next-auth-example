@@ -17,13 +17,20 @@ export default NextAuth({
             name: "Pinterest",
             type: "oauth",
             version: "2.0",
-            accessTokenUrl: "https://api.pinterest.com/v5/oauth/token",
+            token: "https://api.pinterest.com/v5/oauth/token",
                 authorization: {
       url: "https://www.pinterest.com/oauth",
       params: {
         audience: "api.pinterest.com",
         prompt: "consent",
-        scope: "user_accounts:read",
+        scope: "boards:read,boards:read_secret,boards:write,boards:write_secret,pins:read,pins:read_secret,pins:write,pins:write_secret,user_accounts:read",
+      },
+    },
+    token: "https://api.pinterest.com/v5/oauth/token",
+     userinfo: {
+      url: "https://api.pinterest.com/v5/me/",
+      params: {
+        projection: `(id,localizedFirstName,localizedLastName,profilePicture(displayImage~digitalmediaAsset:playableStreams))`,
       },
     },
             clientId: process.env.PINTEREST_CLIENT_ID,
@@ -33,10 +40,8 @@ export default NextAuth({
             headers: {},
             authorizationParams: {
                 client_id: process.env.PINTEREST_CLIENT_ID,
-                scope: "user_accounts:read",
                 redirect_uri: encodeURIComponent(process.env.PINTEREST_REDIRECT_URI),
             },
-            scope: "identify guilds",
         },
     /* EmailProvider({`
          server: process.env.EMAIL_SERVER,

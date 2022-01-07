@@ -1,6 +1,6 @@
 {
-  "name": "next-auth-example",
-  "version": "0.0.0",
+  "name": "test-next-auth-example",
+  "version": "0.0.1",
   "private": true,
   "description": "An example project for NextAuth.js",
   "repository": "https://github.com/nextauthjs/next-auth-example.git",
