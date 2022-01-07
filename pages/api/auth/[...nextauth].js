@@ -28,10 +28,7 @@ export default NextAuth({
     },
     token: "https://api.pinterest.com/v5/oauth/token",
      userinfo: {
-      url: "https://api.pinterest.com/v5/me/",
-      params: {
-        projection: `(id,localizedFirstName,localizedLastName,profilePicture(displayImage~digitalmediaAsset:playableStreams))`,
-      },
+      url: "https://api.pinterest.com/v5/user_account",
     },
             clientId: process.env.PINTEREST_CLIENT_ID,
             clientSecret: process.env.PINTEREST_CLIENT_SECRET,
