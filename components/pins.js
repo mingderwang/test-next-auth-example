@@ -28,8 +28,8 @@ export default function Pins({ ...props }) {
               <div className="card-body">
                 <h2 className="card-title">{pin.pinner.full_name}</h2>
                 <p>{pin.description}</p>
-                <div class="justify-end card-actions">
-                  <button class="btn btn-secondary">convert to NFT</button>
+                <div className="justify-end card-actions">
+                  <button className="btn btn-secondary">convert to NFT</button>
                 </div>
               </div>
             </div>
