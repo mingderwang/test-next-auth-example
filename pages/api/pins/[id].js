@@ -6,5 +6,5 @@ export default async function handler(req, res) {
     `https://api.pinterest.com/v3/pidgets/users/${userId}/pins/`
   );
   const result = await punks.json();
-  res.status(200).json(result.data.pins);
+  res.status(200).json(result.data?.pins);
 }
