@@ -13,34 +13,19 @@ export default NextAuth({
   // https://next-auth.js.org/configuration/providers
   providers: [
     {
-  id: "google",
-  name: "Google",
-  type: "oauth",
-  wellKnown: "https://accounts.google.com/.well-known/openid-configuration",
-  authorization: { params: { scope: "openid email profile" } },
-  idToken: true,
-  checks: ["pkce", "state"],
-  profile(profile) {
-    return {
-      id: profile.sub,
-      name: profile.name,
-      email: profile.email,
-      image: profile.picture,
-    }
-  },
-  clientId: process.env.GOOGLE_ID,
-  clientSecret: process.env.GOOGLE_SECRET,
-},
-    {
             id: "pinterest",
             name: "Pinterest",
             type: "oauth",
             version: "2.0",
-            scope: "boards:read,boards:read_secret,boards:write,boards:write_secret,pins:read,pins:read_secret,pins:write,pins:write_secret,user_accounts:read",
-            accessTokenUrl: "https://api.pinterest.com/v3/oauth/token",
-            authorizationUrl: "https://www.pinterest.com/oauth&response_type=code",
-            requestTokenUrl: "",
-            profileUrl: "",
+            accessTokenUrl: "https://api.pinterest.com/v5/oauth/token",
+                authorization: {
+      url: "https://www.pinterest.com/oauth",
+      params: {
+        audience: "api.pinterest.com",
+        prompt: "consent",
+        scope: "user_accounts:read",
+      },
+    },
             clientId: process.env.PINTEREST_CLIENT_ID,
             clientSecret: process.env.PINTEREST_CLIENT_SECRET,
             profile: async (profile, accessToken) => {},
@@ -48,11 +33,12 @@ export default NextAuth({
             headers: {},
             authorizationParams: {
                 client_id: process.env.PINTEREST_CLIENT_ID,
-                // scope: scope,
+                scope: "user_accounts:read",
                 redirect_uri: encodeURIComponent(process.env.PINTEREST_REDIRECT_URI),
-            }
+            },
+            scope: "identify guilds",
         },
-    /* EmailProvider({
+    /* EmailProvider({`
          server: process.env.EMAIL_SERVER,
          from: process.env.EMAIL_FROM,
        }),
@@ -79,10 +65,10 @@ export default NextAuth({
       // https://docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps
       scope: "read:user",
     }),
-//    GoogleProvider({
-//      clientId: process.env.GOOGLE_ID,
-//      clientSecret: process.env.GOOGLE_SECRET,
-//    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
+    }),
     TwitterProvider({
       clientId: process.env.TWITTER_ID,
       clientSecret: process.env.TWITTER_SECRET,
