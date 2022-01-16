@@ -1,5 +1,4 @@
 import { SessionProvider } from "next-auth/react";
-import "./styles.css";
 import "./styles/globals.css";
 
 // Use of the <SessionProvider> is now mandatory to allow components that call
