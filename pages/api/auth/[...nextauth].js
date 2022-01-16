@@ -13,8 +13,8 @@ export default NextAuth({
   // https://next-auth.js.org/configuration/providers
   providers: [
     {
-            id: "pinterest",
-            name: "Pinterest",
+id: "pinterest",
+     name: "Pinterest",
             type: "oauth",
             version: "2.0",
             token: "https://api.pinterest.com/v5/oauth/token",
@@ -32,10 +32,9 @@ export default NextAuth({
       async request({ client, tokens }) {
         // Get base profile
         const profile = await client.userinfo(tokens)
-console.log('profile', profile)
         // no email info from Pinterest API
             if (!profile.email) {
-              profile.email = profile.username
+              profile.email = profile.username 
         }
         return profile
       },
